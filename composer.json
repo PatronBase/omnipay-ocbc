@@ -1,0 +1,44 @@
+{
+    "name": "patronbase/omnipay-ocbc",
+    "type": "library",
+    "description": "OCBC Bank Payment Gateway (BPG) driver for the Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "bank",
+        "ocbc",
+        "bpg",
+        "connect2ocbc",
+        "store",
+        "api",
+        "json"
+    ],
+    "homepage": "https://github.com/PatronBase/omnipay-ocbc",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Leith Caldwell",
+            "email": "leith@codedruids.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\OCBC\\" : "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Omnipay\\OCBC\\" : "tests/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1.x-dev"
+        }
+    }
+}

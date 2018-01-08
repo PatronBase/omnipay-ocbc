@@ -1,0 +1,8 @@
+HTTP/1.1 400 Bad Request
+Accept: */*
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,POST,PATCH,OPTIONS
+cache-control: no-cache
+Access-Control-Allow-Headers: authorization,Access-Control-Allow-Origin,Content-Type,sessionToken,App-Name,App-Version
+Content-Type: application/xml; charset=UTF-8
+Date: Mon, 08 Jan 2018 04:45:08 GMT
