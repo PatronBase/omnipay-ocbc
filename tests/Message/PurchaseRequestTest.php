@@ -166,6 +166,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals(403, $code);
         $this->assertSame('900906', $response->getCode());
         $this->assertSame("No matching resource found in the API for the given request", $response->getMessage());
+        $this->assertNull($response->getTransactionId());
         $this->assertNull($response->getTransactionReference());
     }
 
@@ -182,6 +183,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals(400, $code);
         $this->assertNull($response->getCode());
         $this->assertNull($response->getMessage());
+        $this->assertNull($response->getTransactionId());
         $this->assertNull($response->getTransactionReference());
     }
 

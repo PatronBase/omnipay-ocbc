@@ -160,10 +160,8 @@ class PurchaseResponse extends AbstractResponse
             return $this->data['responseDesc'];
         }
 
-        // check if general transaction status is available
-        if (isset($this->data['txnStatus'])) {
-            return $this->data['txnStatus'];
-        }
+        // use general transaction status (if unavailable would error in constructor)
+        return $this->data['txnStatus'];
     }
 
     /**
