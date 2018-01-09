@@ -2,7 +2,6 @@
 
 namespace Omnipay\OCBC\Message;
 
-use SimpleXMLElement;
 use Guzzle\Http\Message\Response as HttpResponse;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
@@ -34,10 +33,10 @@ class PurchaseResponse extends AbstractResponse
      *
      * Also verifies that signature supplied in the response is valid
      *
-     * @param RequestInterface $request   The initiating request
-     * @param HttpResponse     $response  HTTP response object
+     * @param PurchaseRequest $request   The initiating request
+     * @param HttpResponse    $response  HTTP response object
      */
-    public function __construct(RequestInterface $request, $response)
+    public function __construct(PurchaseRequest $request, $response)
     {
         $this->response = $response;
 
