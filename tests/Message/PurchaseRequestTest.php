@@ -17,6 +17,7 @@ class PurchaseRequestTest extends TestCase
                 'currency' => 'SGD',
                 'description' => 'Order #4',
                 'transactionId' => 'C017',
+                'customerId' => 'My Customer',
                 'card' => array(
                     'name' => "Luke Holder",
                     'address1' => '123 Somewhere St',
@@ -83,6 +84,70 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals('4003', $response->getCode());
         $this->assertSame("Duplicate MERCHANT_TRANID detected! Please ensure the MERCHANT_TRANID is always unique.", $response->getMessage());
         $this->assertSame('', $response->getTransactionReference());
+    }
+
+    /**
+     * Simulate card declined with lower case 'results' node (no error in transit, 200 HTTP response)
+     */
+    public function testSendFailureLowerCaseResults()
+    {
+        $this->setMockHttpResponse('PurchaseResponseFailureLowerCaseResults.txt');
+        $response = $this->request->send();
+
+        $data = $this->request->getData();
+
+        $code = $response->response->getStatusCode();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals('150.00', $data['amount']);
+        $this->assertEquals(200, $code);
+        $this->assertEquals('C017', $response->getTransactionId());
+        $this->assertEquals('4003', $response->getCode());
+        $this->assertSame("Duplicate MERCHANT_TRANID detected! Please ensure the MERCHANT_TRANID is always unique.", $response->getMessage());
+        $this->assertSame('', $response->getTransactionReference());
+    }
+
+    /**
+     * Simulate card declined without response description (no error in transit, 200 HTTP response)
+     */
+    public function testSendFailureWithoutResponseDescription()
+    {
+        $this->setMockHttpResponse('PurchaseResponseFailureWithoutResponseDescription.txt');
+        $response = $this->request->send();
+        $this->assertSame("F", $response->getMessage());
+    }
+
+    /**
+     * Simulate card declined (bad signature)
+     *
+     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
+     */
+    public function testSendSignatureFailure()
+    {
+        $this->setMockHttpResponse('PurchaseResponseSignatureFailure.txt');
+        $response = $this->request->send();
+    }
+
+    /**
+     * Simulate card declined (missing data)
+     *
+     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
+     */
+    public function testSendDataFailure()
+    {
+        $this->setMockHttpResponse('PurchaseResponseDataFailure.txt');
+        $response = $this->request->send();
+    }
+
+    /**
+     * Simulate card declined (missing request data)
+     *
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testSendRequestFailure()
+    {
+        $this->setMockHttpResponse('PurchaseResponseFailure.txt');
+        $this->request->setPassword(null);
+        $response = $this->request->send();
     }
 
     /**
